@@ -1,0 +1,17 @@
+<div class="posts-container">
+    <mat-form-field>
+        <mat-label>Sort By</mat-label>
+        <mat-select [(value)]="selectedSort" (selectionChange)="sortChanged()">
+            <mat-option *ngFor="let sort of sorts" [value]="sort">
+            {{sort}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ul>
+        <li *ngFor="let post of posts">
+            <app-post [post]="post"></app-post>
+            <hr>
+        </li>
+    </ul>
+</div>

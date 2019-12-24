@@ -1,0 +1,22 @@
+<h3>+New Post</h3>
+<div class="form-container">
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input matInput
+            name="username"
+            [(ngModel)]="username"
+            placeholder="Username"
+            value="">
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width">
+            <textarea matInput
+                name="postText" 
+                [(ngModel)]="postText"
+                placeholder="In no time at all you could be posting!">
+            </textarea>
+        </mat-form-field>
+        <button type="submit" (click)="submitPost">Submit Post</button>
+    </form>
+    <div>{{username}}  {{postText}}</div>
+</div>
