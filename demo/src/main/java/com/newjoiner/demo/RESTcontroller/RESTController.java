@@ -1,21 +1,24 @@
 package com.newjoiner.demo.RESTcontroller;
 
+import com.newjoiner.demo.pojo.Post;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @Slf4j
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class RESTController {
 
     @GetMapping("/data")
-    public Object getData() {
+    public ArrayList<Post> getData() {
         log.info("hit the GET /data endpoint");
-        return null;
+        ArrayList<Post> postList = new ArrayList();
+        for(int i = 0; i < 10; i ++) {
+            postList.add(new Post());
+        }
+        return postList;
     }
 
     @PostMapping("/data")

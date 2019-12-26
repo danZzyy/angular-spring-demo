@@ -8,8 +8,9 @@ import { Post } from '../browse/post';
     providedIn: 'root'
 })
 
+
 export class RestService {
-    private url = 'localhos:4200/data';
+    private url = 'http://localhost:8080/data';
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
@@ -19,6 +20,7 @@ export class RestService {
     }
 
     getData(): Observable<Post[]> {
+        /*
         let postObservable = new Observable<Post[]>(subscriber => {
             let postList: Post[] = new Array(10).fill(null);
             postList = postList.map(p => {
@@ -33,6 +35,9 @@ export class RestService {
         });
 
        return postObservable;
+       */
+
+       return this.http.get<Post[]>(this.url);
     }
 
     submitData(body: any): Observable<boolean> {

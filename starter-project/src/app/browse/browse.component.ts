@@ -17,6 +17,7 @@ export class BrowseComponent implements OnInit {
   ngOnInit() {
     this.restService.getData().subscribe(
       posts => {
+        console.log(posts);
         this.posts = posts;
       },
       err => {
