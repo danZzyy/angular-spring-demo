@@ -1,6 +1,8 @@
 package com.newjoiner.demo.RESTcontroller;
 
+import com.newjoiner.demo.pojo.CommentBody;
 import com.newjoiner.demo.pojo.Post;
+import com.newjoiner.demo.pojo.PostBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +23,15 @@ public class RESTController {
         return postList;
     }
 
-    @PostMapping("/data")
-    public Boolean saveData(@RequestBody Object body) {
-        log.info("hit the POST /data endpoint");
+    @PostMapping("/post")
+    public Boolean savePost(@RequestBody PostBody body) {
+        log.info("hit the POST /post endpoint");
+        return true;
+    }
+
+    @PostMapping("/comment")
+    public Boolean saveComment(@RequestBody CommentBody body) {
+        log.info("hit the POST /comment endpoint");
         return true;
     }
 
