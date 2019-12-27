@@ -4,6 +4,8 @@ import com.newjoiner.demo.pojo.CommentBody;
 import com.newjoiner.demo.pojo.Post;
 import com.newjoiner.demo.pojo.PostBody;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,37 +16,49 @@ import java.util.ArrayList;
 public class RESTController {
 
     @GetMapping("/data")
-    public ArrayList<Post> getData() {
+    public ResponseEntity<ArrayList<Post>> getData() {
         log.info("hit the GET /data endpoint");
         ArrayList<Post> postList = new ArrayList();
         for(int i = 0; i < 10; i ++) {
             postList.add(new Post());
         }
-        return postList;
+        return new ResponseEntity<>(postList, HttpStatus.OK);
     }
 
     @PostMapping("/post")
-    public Boolean savePost(@RequestBody PostBody body) {
+    public ResponseEntity<Boolean> savePost(@RequestBody PostBody body) {
         log.info("hit the POST /post endpoint");
-        return true;
+        if (body == null) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @PostMapping("/comment")
-    public Boolean saveComment(@RequestBody CommentBody body) {
+    public ResponseEntity<Boolean> saveComment(@RequestBody CommentBody body) {
+        if (body == null) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
         log.info("hit the POST /comment endpoint");
-        return true;
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @PutMapping("/data")
-    public Boolean updateData(@RequestBody Object body) {
+    public ResponseEntity<Boolean> updateData(@RequestBody PostBody body) {
         log.info("hit the PUT /data endpoint");
-        return true;
+        if (body == null) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @DeleteMapping("/data")
-    public Boolean deleteData() {
+    public ResponseEntity<Boolean> deleteData(@RequestParam(name = "id") String id) {
         log.info("hit the DELETE /data endpoint");
-        return true;
+        if (id == null) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
 }
