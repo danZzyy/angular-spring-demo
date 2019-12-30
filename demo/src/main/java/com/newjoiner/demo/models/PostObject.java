@@ -1,6 +1,7 @@
 package com.newjoiner.demo.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "post")
@@ -27,6 +29,5 @@ public class PostObject implements Serializable {
 
     @Column(name = "timestamp", nullable = false)
     private Timestamp timestamp;
-
 
 }
