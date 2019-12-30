@@ -36,10 +36,10 @@ public class RESTController {
 
     @PostMapping("/comment")
     public ResponseEntity<Boolean> saveComment(@RequestBody CommentBody body) {
+        log.info("hit the POST /comment endpoint");
         if (body == null) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
-        log.info("hit the POST /comment endpoint");
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 

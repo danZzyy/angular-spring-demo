@@ -18,9 +18,9 @@
     <div class="new-comment-area" *ngIf="commentOpen">
         <button (click)="commentOpen = false;">Cancel</button>
         User:
-        <input type="text" [(ngModel)]="commentUser">
+        <input type="text" [(ngModel)]="commentUser" required>
         <textarea name="" id="" cols="20" rows="5" [(ngModel)]="commentText"></textarea>
         <button (click)="clearComment()">Clear</button>
-        <button (click)="submitComment()">Submit Comment</button>
+        <button (click)="submitComment()" [disabled]="commentUser == ''">Submit Comment</button>
     </div>
 </div>

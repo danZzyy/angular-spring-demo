@@ -20,22 +20,6 @@ export class RestService {
     }
 
     getData(): Observable<Post[]> {
-        /*
-        let postObservable = new Observable<Post[]>(subscriber => {
-            let postList: Post[] = new Array(10).fill(null);
-            postList = postList.map(p => {
-                return {
-                    username: StubDataService.generateStubName(),
-                    postText: StubDataService.generatePostText(),
-                    timestamp: StubDataService.generateTimestamp(),
-                    comments: []
-                } as Post;
-            });
-            subscriber.next(postList);
-        });
-
-       return postObservable;
-       */
 
        return this.http.get<Post[]>(this.url);
     }
