@@ -18,7 +18,7 @@ public class DatabaseService {
             et = em.getTransaction();
             et.begin();
             PostObject postObj = new PostObject();
-            
+
 
             return true;
 
