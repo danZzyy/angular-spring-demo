@@ -10,21 +10,21 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "post")
-public class PostObject implements Serializable {
+public class PostObj implements Serializable {
     public static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "postId", nullable = false)
+    @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    @Column(name = "user_id", nullable = false)
+    private int userId;
 
-    @Column(name = "postText", nullable = false)
+    @Column(name = "post_text", nullable = false)
     private String postText;
 
     @Column(name = "timestamp", nullable = false)
