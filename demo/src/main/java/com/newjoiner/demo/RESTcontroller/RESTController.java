@@ -1,8 +1,8 @@
 package com.newjoiner.demo.RESTcontroller;
 
+import com.newjoiner.demo.models.Post;
 import com.newjoiner.demo.persistence.DatabaseService;
 import com.newjoiner.demo.pojo.CommentBody;
-import com.newjoiner.demo.pojo.Post;
 import com.newjoiner.demo.pojo.PostBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +36,7 @@ public class RESTController {
         if (body == null) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
+        databaseService.newPost(body);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
