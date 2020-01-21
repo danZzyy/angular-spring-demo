@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../browse/post';
 import { Comment } from '../browse/comment';
+import { RestService } from '../services/rest-service';
 
 @Component({
   selector: 'app-post',
@@ -13,24 +14,36 @@ export class PostComponent {
   commentUser: string = '';
   commentText: string = '';
 
-  constructor() { }
+  constructor(private restService: RestService) { }
 
   submitComment() {
-    let newComment: Comment = {
-      username: this.commentUser,
-      commentText: this.commentText,
-      timestamp: (new Date()).toISOString()
-    };
 
-    //make async request
-    //push to comment list only in success
-    //display error otherwise
-
-    this.post.comments.push(newComment);
   }
 
   clearComment() {
     this.commentUser = '';
     this.commentText = '';
+  }
+
+  deleteComment(commentId: number) {
+    this.restService.deleteComment(commentId).subscribe(
+      res => {
+
+      },
+      err => {
+        console.error(err);
+      },
+      () => {
+        this.restService.getCommentsForPost(this.post.id).subscribe(
+          comments => {
+            this.post.commentList = comments;
+          },
+          err => {
+            console.error(err);
+          },
+          () => {}
+        );
+      }
+    );
   }
 }

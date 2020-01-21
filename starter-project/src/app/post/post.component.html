@@ -1,15 +1,14 @@
 <div>
-    User: {{post.username}}
+    <h5>{{post.user.username}}</h5>
+    <h5>{{post.timestamp}}</h5>
     <p>{{post.postText}}</p>
-    <span>{{post.timestamp}}</span>
 </div>
 <div class="comments-container">
     Comments:
     <ul>
-        <li *ngFor="let comment of post.comments">
-            User: {{comment.username}}
-            <p>{{comment.commentText}}</p>
-            <span>{{comment.timestamp}}</span>
+        <li *ngFor="let comment of post.commentList">
+            <app-comment [comment]="comment"></app-comment>
+            <button (click)="deleteComment(comment.id)">Delete</button>
         </li>
     </ul>
     <div>

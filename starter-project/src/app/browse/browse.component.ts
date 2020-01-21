@@ -15,7 +15,7 @@ export class BrowseComponent implements OnInit {
   constructor(private restService: RestService) { }
 
   ngOnInit() {
-    this.restService.getData().subscribe(
+    this.restService.getPosts().subscribe(
       posts => {
         console.log(posts);
         this.posts = posts;
@@ -33,10 +33,10 @@ export class BrowseComponent implements OnInit {
     console.log(this.selectedSort);
     switch(this.selectedSort) {
       case 'User Asc' : {
-        this.posts.sort((a, b) => (a.username > b.username) ? 1 : -1);
+        this.posts.sort((a, b) => (a.user.username > b.user.username) ? 1 : -1);
       }
       case 'User Desc' : {
-        this.posts.sort((a, b) => (a.username < b.username) ? 1 : -1);
+        this.posts.sort((a, b) => (a.user.username < b.user.username) ? 1 : -1);
       }
       case 'Timestamp Asc' : {
         this.posts.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : -1);

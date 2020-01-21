@@ -30,14 +30,20 @@ public class RESTController {
         return new ResponseEntity<>(postList, HttpStatus.OK);
     }
 
+    @GetMapping("/posts")
+    public ResponseEntity<Iterable<Post>> getPosts() {
+        Iterable<Post> posts = databaseService.getPosts();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
     @PostMapping("/post")
     public ResponseEntity<Boolean> savePost(@RequestBody PostBody body) {
         log.info("hit the POST /post endpoint");
         if (body == null) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
-        databaseService.newPost(body);
-        return new ResponseEntity<>(true, HttpStatus.OK);
+        Boolean resp = databaseService.newPost(body);
+        return new ResponseEntity<>(resp, resp ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/comment")
@@ -46,7 +52,8 @@ public class RESTController {
         if (body == null) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(true, HttpStatus.OK);
+        Boolean resp = databaseService.newComment(body);
+        return new ResponseEntity<>(resp, resp ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/data")

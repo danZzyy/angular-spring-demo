@@ -26,10 +26,14 @@ public class Post implements Serializable {
     @Column(name = "timestamp", nullable = false)
     private Timestamp timestamp;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List commentList;
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> commentList;
 
     @OneToOne
     private User user;
+
+    public void addComment(Comment comment) {
+        this.commentList.add(comment);
+    }
 
 }

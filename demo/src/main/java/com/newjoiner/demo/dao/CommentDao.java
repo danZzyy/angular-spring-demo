@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CommentDao extends JpaRepository<Comment,Integer> {
 
-    void deleteByPostId(int postId);
+    //void deleteByPostId(int postId);
 
-    List<Comment> findAllByPostId(int postId);
+    //List<Comment> findAllByPostId(int postId);
 }

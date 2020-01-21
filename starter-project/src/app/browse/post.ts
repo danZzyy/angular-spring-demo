@@ -1,8 +1,10 @@
 import { Comment } from './comment';
+import { User } from './user';
 
 export interface Post {
-    username: string;
+    id: number;
+    user: User;
     postText: string;
     timestamp: string;
-    comments: Comment[];
+    commentList: Comment[];
 }

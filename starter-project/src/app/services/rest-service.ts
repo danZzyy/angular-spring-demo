@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { StubDataService } from './stub-data.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from '../browse/post';
+import { Comment } from '../browse/comment';
 
 @Injectable({
     providedIn: 'root'
@@ -10,18 +11,19 @@ import { Post } from '../browse/post';
 
 
 export class RestService {
-    private url = 'http://localhost:8080/data';
+    private url = 'http://localhost:8080/';
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {}
 
+    getPosts(): Observable<Post[]> {
+       return this.http.get<Post[]>(this.url + 'posts');
     }
 
-    getData(): Observable<Post[]> {
-
-       return this.http.get<Post[]>(this.url);
+    getCommentsForPost(postId: number): Observable<Comment[]> {
+        return this.http.get<Comment[]>(this.url + 'comments?postId=' + postId, this.httpOptions);
     }
 
     submitData(body: any): Observable<boolean> {
@@ -32,8 +34,8 @@ export class RestService {
         return this.http.put<boolean>(this.url, body, this.httpOptions);
     }
 
-    deleteData(id: string): Observable<boolean> {
-        return this.http.delete<boolean>(this.url, this.httpOptions);
+    deleteComment(commentId: number): Observable<boolean> {
+        return this.http.delete<boolean>(this.url + 'comment?commentId=' + commentId, this.httpOptions);
     }
 
 }

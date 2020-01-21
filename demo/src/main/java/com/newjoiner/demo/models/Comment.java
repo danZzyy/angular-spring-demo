@@ -19,8 +19,11 @@ public class Comment implements Serializable {
     @GeneratedValue( strategy= GenerationType.IDENTITY )
     private int id;
 
-    @Column(name = "post_id", nullable = false)
-    private int postId;
+    /*
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
+    */
 
     @Column(name = "comment_text", nullable = false)
     private String commentText;
@@ -28,6 +31,6 @@ public class Comment implements Serializable {
     @Column(name = "comment_time", nullable = false)
     private Timestamp commentTime;
 
-    @OneToOne
-    private User user;
+    @Column(name = "username", nullable = false)
+    private String username;
 }

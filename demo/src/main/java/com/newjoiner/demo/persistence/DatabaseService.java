@@ -6,6 +6,7 @@ import com.newjoiner.demo.dao.UserDao;
 import com.newjoiner.demo.models.Comment;
 import com.newjoiner.demo.models.Post;
 import com.newjoiner.demo.models.User;
+import com.newjoiner.demo.pojo.CommentBody;
 import com.newjoiner.demo.pojo.PostBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,51 +34,88 @@ public class DatabaseService {
         return postDao.findAll();
     }
 
+    /*
     public List<Comment> getCommentsForPost(int postId) {
         return commentDao.findAllByPostId(postId);
-    }
+    } */
 
     public Boolean newPost(PostBody postBody) {
-        User postUser = userDao.findByUsername(postBody.getUsername());
-        if (postUser == null) {
-            log.info("Creating new user: " + postBody.getUsername());
-            postUser = new User();
-            postUser.setUsername(postBody.getUsername());
-            userDao.save(postUser);
+        try {
+            User postUser = userDao.findByUsername(postBody.getUsername());
+            if (postUser == null) {
+                log.info("Creating new user: " + postBody.getUsername());
+                postUser = new User();
+                postUser.setUsername(postBody.getUsername());
+                userDao.save(postUser);
+            }
+            Post newPost = new Post();
+            newPost.setPostText(postBody.getPostText());
+            newPost.setUser(postUser);
+            newPost.setTimestamp(new Timestamp((new Date()).getTime()));
+            postDao.save(newPost);
+            log.info("Saved new post!");
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        Post newPost = new Post();
-        newPost.setPostText(postBody.getPostText());
-        newPost.setUser(postUser);
-        newPost.setTimestamp(new Timestamp((new Date()).getTime()));
-        postDao.save(newPost);
-        log.info("Saved new post!");
-        return true;
     }
 
-    public Boolean newComment() {
-        return true;
+    public Boolean newComment(CommentBody commentBody) {
+        try {
+            Post post = postDao.getOne(commentBody.getPostId());
+            Comment comment = commentBody.getNewComment();
+            User commentUser = userDao.findByUsername(comment.getUsername());
+            //comment.setPost(post);
+            comment.setCommentTime(new Timestamp((new Date()).getTime()));
+            commentDao.save(comment);
+            if (commentUser == null) {
+                log.info("Creating new user: " + comment.getUsername());
+                commentUser = new User();
+                commentUser.setUsername(comment.getUsername());
+                userDao.save(commentUser);
+            }
+            post.addComment(commentBody.getNewComment());
+            postDao.save(post);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Boolean editPost() {
-        return true;
+        try {
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Boolean editComment() {
-        return true;
+        try {
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
     
     public Boolean deletePost(int postId) {
-        //delete all comments on that post
-        commentDao.deleteByPostId(postId);
-        postDao.deleteById(postId);
-
-        return true;
+        try {
+            //delete all comments on that post
+            //commentDao.deleteByPostId(postId);
+            postDao.deleteById(postId);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Boolean deleteComment(int commentId) {
-        commentDao.deleteById(commentId);
-
-        return true;
+        try {
+            commentDao.deleteById(commentId);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
