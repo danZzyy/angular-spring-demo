@@ -18,6 +18,14 @@ export class NewPostComponent implements OnInit {
   }
   
   submitPost() {
-    
+    this.restService.submitPost({username: this.username, postText: this.postText}).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.error(err);
+      },
+      () => {}
+    )
   }
 }

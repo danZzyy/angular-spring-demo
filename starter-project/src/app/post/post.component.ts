@@ -13,11 +13,57 @@ export class PostComponent {
   commentOpen: boolean;
   commentUser: string = '';
   commentText: string = '';
-
+  editMode: boolean = false;
+  editText: string;
   constructor(private restService: RestService) { }
 
-  submitComment() {
+  editPost() {
+    this.editMode = true;
+    this.editText = this.post.postText;
+  }
 
+  submitPost() {
+    this.editMode = false;
+    this.post.postText = this.editText;
+
+    this.restService.updatePost({id: this.post.id, postText: this.post.postText }).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.error(err);
+      },
+      () => {}
+    )
+  }
+
+  submitComment() {
+    let newComment = {
+      postId: this.post.id,
+      newComment: {
+        commentText: this.commentText,
+        username: this.commentUser
+      }
+    }
+    this.restService.submitComment(newComment).subscribe(
+      res => {
+
+      },
+      err => {
+        console.error(err)
+      },
+      () => {
+        this.restService.getCommentsForPost(this.post.id).subscribe(
+          comments => {
+            this.post.commentList = comments;
+          },
+          err => {
+            console.error(err);
+          },
+          () => {}
+        );
+      }
+    )
   }
 
   clearComment() {

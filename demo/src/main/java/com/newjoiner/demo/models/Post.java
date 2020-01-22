@@ -26,7 +26,7 @@ public class Post implements Serializable {
     @Column(name = "timestamp", nullable = false)
     private Timestamp timestamp;
 
-    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity = Comment.class, orphanRemoval = true)
     private List<Comment> commentList;
 
     @OneToOne

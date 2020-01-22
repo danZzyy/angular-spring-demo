@@ -8,6 +8,8 @@ import com.newjoiner.demo.models.Post;
 import com.newjoiner.demo.models.User;
 import com.newjoiner.demo.pojo.CommentBody;
 import com.newjoiner.demo.pojo.PostBody;
+import com.newjoiner.demo.pojo.PostUpdateBody;
+import javafx.scene.chart.ScatterChart;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -34,10 +37,14 @@ public class DatabaseService {
         return postDao.findAll();
     }
 
-    /*
-    public List<Comment> getCommentsForPost(int postId) {
-        return commentDao.findAllByPostId(postId);
-    } */
+    public List<Comment> getComments(Integer postId) {
+        Optional<Post> postOpt = postDao.findById(postId);
+        if (postOpt.isPresent()) {
+            Post post = postOpt.get();
+            return post.getCommentList();
+        }
+        return null;
+    }
 
     public Boolean newPost(PostBody postBody) {
         try {
@@ -56,8 +63,10 @@ public class DatabaseService {
             log.info("Saved new post!");
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
+
     }
 
     public Boolean newComment(CommentBody commentBody) {
@@ -78,22 +87,28 @@ public class DatabaseService {
             postDao.save(post);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
-    public Boolean editPost() {
+    public Boolean editPost(PostUpdateBody postUpdateBody) {
         try {
+            Post post = postDao.getOne(postUpdateBody.getId());
+            post.setPostText(postUpdateBody.getPostText());
+            postDao.save(post);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
-    public Boolean editComment() {
+    public Boolean editComment(CommentBody commentBody) {
         try {
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -105,6 +120,7 @@ public class DatabaseService {
             postDao.deleteById(postId);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -114,6 +130,7 @@ public class DatabaseService {
             commentDao.deleteById(commentId);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

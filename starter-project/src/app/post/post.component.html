@@ -1,7 +1,19 @@
-<div>
+<div *ngIf="!editMode">
     <h5>{{post.user.username}}</h5>
     <h5>{{post.timestamp}}</h5>
     <p>{{post.postText}}</p>
+    <button (click)="editPost()">Edit</button>
+</div>
+<div *ngIf="editMode">
+    <h5>{{post.user.username}}</h5>
+    <h5>{{post.timestamp}}</h5>
+    <mat-form-field class="example-full-width">
+        <textarea matInput
+            name="postText" 
+            [(ngModel)]="editText">
+        </textarea>
+    </mat-form-field>
+    <button type="submit" (click)="submitPost()">Submit Post</button>
 </div>
 <div class="comments-container">
     Comments:

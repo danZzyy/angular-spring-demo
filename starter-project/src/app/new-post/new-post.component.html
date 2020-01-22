@@ -16,7 +16,7 @@
                 placeholder="In no time at all you could be posting!">
             </textarea>
         </mat-form-field>
-        <button type="submit" (click)="submitPost" [disabled]="username == ''">Submit Post</button>
+        <button type="submit" (click)="submitPost()" [disabled]="username == ''">Submit Post</button>
     </form>
     <div>{{username}}  {{postText}}</div>
 </div>

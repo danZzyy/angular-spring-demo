@@ -26,12 +26,16 @@ export class RestService {
         return this.http.get<Comment[]>(this.url + 'comments?postId=' + postId, this.httpOptions);
     }
 
-    submitData(body: any): Observable<boolean> {
-        return this.http.post<boolean>(this.url, body, this.httpOptions);
+    submitPost(body: any): Observable<boolean> {
+        return this.http.post<boolean>(this.url + 'post', body, this.httpOptions);
     }
     
-    updateData(body: any): Observable<boolean> {
-        return this.http.put<boolean>(this.url, body, this.httpOptions);
+    submitComment(body: any): Observable<boolean> {
+        return this.http.post<boolean>(this.url + 'comment', body, this.httpOptions);
+    }
+
+    updatePost(body: any): Observable<boolean> {
+        return this.http.put<boolean>(this.url + 'post', body, this.httpOptions);
     }
 
     deleteComment(commentId: number): Observable<boolean> {

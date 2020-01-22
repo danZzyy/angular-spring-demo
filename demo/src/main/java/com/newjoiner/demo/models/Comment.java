@@ -17,13 +17,7 @@ public class Comment implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue( strategy= GenerationType.IDENTITY )
-    private int id;
-
-    /*
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
-    */
+    private int id;Post post;
 
     @Column(name = "comment_text", nullable = false)
     private String commentText;
